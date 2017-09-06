@@ -25,7 +25,8 @@ third_party_core: path \
 									fastapprox	\
 									yaml-cpp \
 									eigen \
-									zeromq
+									zeromq \
+									lmdb
 
 
 third_party_all: third_party_core \
@@ -245,3 +246,10 @@ $(ZMQ_LIB): $(ZMQ_SRC)
 	make install
 	cp $(THIRD_PARTY_CENTRAL)/zmq.hpp $(THIRD_PARTY_INCLUDE)
 
+# ==================== lmdb ====================
+LMDB_SRC = $(THIRD_PARTY_CENTRAL)/lmdb.tar.gz
+
+lmdb: path ${LMDB_SRC}
+	tar zxf ${LMDB_SRC} -C $(THIRD_PARTY_SRC)
+	cd ${THIRD_PARTY_SRC}/lmdb/libraries/liblmdb/; \
+		DESTDIR="${THIRD_PARTY}" make install
